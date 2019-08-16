@@ -1,0 +1,62 @@
+create table managermaster(managerid varchar(10) not null,
+managername varchar(25),
+projectid int(5),
+roleid int(10),
+managerpassword varchar(15),
+primary key(managerid)); 
+desc managermaster;
+
+create table demandtable(requestid int(8) not null,
+managerid varchar(10),
+requestdate date,
+requestraised int(10),
+requestfullfill int(10),
+primary key(requestid));
+desc demandtable
+
+create table benchemployee(employeeid varchar(10) not null,
+employeename varchar(25),
+skill varchar(25),
+grade varchar(5),
+trainingstartdate date,
+trainingcompletiondate date,
+managerid varchar(10),
+primary key(employeeid));
+desc benchemployee
+
+create table roles(roleid int(10),
+roledescription varchar(15),
+primary key(roleid));
+desc roles;
+
+alter table demandtable 
+add foreign key(managerid)
+references managermaster(managerid);
+
+alter table managermaster 
+add foreign key(roleid)
+references roles(roleid);
+
+alter table benchemployee 
+add foreign key(managerid)
+references managermaster(managerid);
+
+insert into managermaster values('180035IN','Ajay P',1,1001,'system123');
+insert into roles values(1001,'Demand Manager');
+insert into roles values(1002,'Super Admin');
+select * from roles;
+
+insert into managermaster values('181129IN','Nitin Joshi',5,1001,'aws123');
+select * from managermaster;
+
+insert into demandtable values(16,'180035IN','2019-06-20',5,2);
+select * from demandtable;
+
+insert into benchemployee values('170055IN','Sarika','Da','A','2019-02-15','2019-05-15',null);
+select * from benchemployee;
+commit;
+
+update  demandtable
+set requestfullfill=3
+where managerid='180036IN';
+
